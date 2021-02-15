@@ -1,25 +1,29 @@
-// Place all the styles related to the chatbot controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
 .response-list-container {
-  background-color: rgb(253, 253, 227);
+  background-color: #fdfde3;
   border-radius: 15px;
   padding: 10px;
   border: solid 1px grey;
 }
+
 .response {
   background-color: whitesmoke;
   border-radius: 15px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
   padding: 10px;
   margin: 5px;
 }
+
 .clickable-response {
   cursor: pointer;
   background-color: white;
   border-radius: 15px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
   padding: 10px;
   margin: 5px;
   border: solid 1px grey;
 }
+/*# sourceMappingURL=chatbot.css.map */

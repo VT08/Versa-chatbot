@@ -1,0 +1,19 @@
+const requestFunc = () => {
+    const data = { query: document.getElementById('chatbot-input').value, authenticity_token: document.getElementsByName('csrf-token')[0].content };
+
+fetch('/api/v1', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+    document.getElementsByClassName('response-list')[0].appendChild((document.createElement('div')).appendChild(document.createTextNode(`${data.fulfillmentText}\n`)))
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+}
