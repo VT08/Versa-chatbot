@@ -1,0 +1,26 @@
+/* .response-list-container {
+  background-color: #b4b45a;
+  border-radius: 15px;
+  padding: 10px;
+  border: solid 1px grey;
+}
+
+.response {
+  background-color: rgb(218, 120, 120);
+  border-radius: 15px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 10px;
+  margin: 5px;
+} */
+
+.clickable-response {
+  cursor: pointer;
+  background-color: rgba(69, 248, 233, 0.103);
+  border-radius: 5px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 2px;
+}
