@@ -7,7 +7,24 @@ const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
 const BOT_NAME = "BOT";
 const PERSON_NAME = "cr7";
 
-msgerForm.addEventListener("submit", event => {
+//------------------
+
+document.querySelector(".openChatBtn").addEventListener("click", openForm);
+document.querySelector(".closeChatBtn").addEventListener("click", closeForm);
+function openForm() {
+  document.querySelector(".openChat").style.display = "block";
+  document.querySelector(".openChatBtn").style.display = "none";
+  document.querySelector(".closeChatBtn").style.display = "block";
+}
+function closeForm() {
+  document.querySelector(".openChat").style.display = "none";
+  document.querySelector(".openChatBtn").style.display = "block";
+  document.querySelector(".closeChatBtn").style.display = "none";
+}
+
+//-------------------
+
+msgerForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const msgText = msgerInput.value;
@@ -15,7 +32,6 @@ msgerForm.addEventListener("submit", event => {
 
   appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
   msgerInput.value = "";
-
 });
 
 function appendMessage(name, img, side, text) {
@@ -59,8 +75,10 @@ const callAPI = (query) => {
       botResponseDisplay(data);
       const len = data.fulfillmentMessages[1].suggestions.suggestions.length;
       var i;
-      for(i=0;i<len;i++){
-        botResponseButtonsDisplay(data.fulfillmentMessages[1].suggestions.suggestions[i].title)
+      for (i = 0; i < len; i++) {
+        botResponseButtonsDisplay2(
+          data.fulfillmentMessages[1].suggestions.suggestions[i].title
+        );
       }
     })
     .catch((error) => {
@@ -72,7 +90,7 @@ document.getElementById("send-button").addEventListener("click", () => {
   callAPI(document.getElementById("chatbot-input").value);
 });
 
-const botResponseDisplay = (data) =>{
+const botResponseDisplay = (data) => {
   const msgHTML = `
     <div class="msg ${"left"}-msg">
       <div class="msg-img" style="background-image: url(${BOT_IMG})"></div>
@@ -92,13 +110,13 @@ const botResponseDisplay = (data) =>{
 
   msgerChat.insertAdjacentHTML("beforeend", msgHTML);
   msgerChat.scrollTop += 500;
-}
+};
 
-const functest = ()=>{
+const functest = () => {
   console.log("btn clicked");
-}
+};
 
-const botResponseButtonsDisplay = (content) =>{
+const botResponseButtonsDisplay = (content) => {
   const msgHTML = `
     <div class="msg ${"left"}-msg">
       <button type="button" onclick="callAPI('${content}')">
@@ -109,8 +127,29 @@ const botResponseButtonsDisplay = (content) =>{
 
   msgerChat.insertAdjacentHTML("beforeend", msgHTML);
   msgerChat.scrollTop += 500;
-}
- 
+};
+
+// Above code doesnt work cause rails treats js files attached as different from functions present in the script tag
+
+const botResponseButtonsDisplay2 = (content) => {
+  msgHTML = document.createElement("DIV");
+  msgHTML.classList.add("msg");
+  msgHTML.classList.add("left-msg");
+  if (content.startsWith("http")) {
+    tag = document.createElement("A");
+    tag.href = content;
+    tag.target = "_blank";
+  } else {
+    tag = document.createElement("BUTTON");
+    tag.onclick = () => {
+      callAPI(`${content}`);
+    };
+  }
+  tag.innerText = content;
+  msgHTML.appendChild(tag);
+  msgerChat.appendChild(msgHTML);
+  msgerChat.scrollTop += 500;
+};
 
 // const responseDisplay = (data) => {
 //   console.log(data)
@@ -154,7 +193,6 @@ const botResponseButtonsDisplay = (content) =>{
 //   document.getElementsByClassName("response-list")[0].appendChild(tag);
 //   document.getElementsByClassName("response-list")[0].appendChild(document.createElement("BR"));
 // };
-
 
 function get(selector, root = document) {
   return root.querySelector(selector);

@@ -1,6 +1,6 @@
 <h1>Versa Chatbot</h1>
 
-<button class="openChatBtn" onclick="openForm()">
+<button class="openChatBtn" >
     
 </button>
 
@@ -44,22 +44,10 @@
     
 </button>
 <script>
-    document .querySelector(".openChatBtn") .addEventListener("click", openForm);
-    document.querySelector(".closeChatBtn").addEventListener("click", closeForm);
-    function openForm() {
-        document.querySelector(".openChat").style.display = "block";
-        document.querySelector(".openChatBtn").style.display = "none";
-        document.querySelector(".closeChatBtn").style.display = "block";
-    }
-    function closeForm() {
-        document.querySelector(".openChat").style.display = "none";
-        document.querySelector(".openChatBtn").style.display = "block";
-        document.querySelector(".closeChatBtn").style.display = "none";
-    }
+    
 </script>
 
 
 <%= stylesheet_link_tag 'style' %>
 <%= stylesheet_link_tag "chatbot" %>
 <%= javascript_pack_tag 'chatbot_index' %> 
-<%= javascript_pack_tag 'chatUI' %> 
