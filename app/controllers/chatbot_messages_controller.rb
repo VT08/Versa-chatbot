@@ -11,6 +11,7 @@ class ChatbotMessagesController < ApplicationController
         require "google/cloud/dialogflow"
 
         puts "#{params}"
+        puts "#{request.url}"
 
         session_client = Google::Cloud::Dialogflow.sessions
         session = session_client.session_path project: project_id,
