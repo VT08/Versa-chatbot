@@ -21,12 +21,6 @@
     background-image: url("https://www.flaticon.com/svg/vstatic/svg/1057/1057225.svg?token=exp=1613809766~hmac=f2b578230eed8ce042c56f26eb7e0a27");
 }
 .openChat {
-    /* display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 25px;
-    z-index: 9; */
-    /* --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
     --msger-bg: #fff;
     --border: 2px solid #ddd;
     --left-msg-bg: #ececec;
@@ -38,7 +32,7 @@
     right: 25px;
     position: fixed;
     height: 80vh;
-    width: 50vh;
+    width: 60vh;
     background-image: var(--body-bg);
     font-family: Helvetica, sans-serif;
  }

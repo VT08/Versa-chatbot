@@ -69,17 +69,31 @@ const callAPI = (query) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      // display("DIV", `${data.fulfillmentText}`);
-      // console.log("Success:", data);
-      // responseDisplay(data);
-      botResponseDisplay(data);
-      const len = data.fulfillmentMessages[1].suggestions.suggestions.length;
-      var i;
-      for (i = 0; i < len; i++) {
-        botResponseButtonsDisplay2(
-          data.fulfillmentMessages[1].suggestions.suggestions[i].title
-        );
+      console.log(data);
+     
+      if(data.fulfillmentMessages[1].suggestions){
+        botResponseDisplay(data.fulfillmentText);
+        const len = data.fulfillmentMessages[1].suggestions.suggestions.length;
+        var i;
+        for (i = 0; i < len; i++) {
+          botResponseButtonsDisplay2(
+            data.fulfillmentMessages[1].suggestions.suggestions[i].title
+          );
+        }
+      }else if(data.fulfillmentMessages[1].listSelect){
+        botResponseDisplay(data.fulfillmentText)
+        botResponseDisplay(data.fulfillmentMessages[1].listSelect.title);
+        const len = data.fulfillmentMessages[1].listSelect.items.length;
+        var i;
+        for (i = 0; i < len; i++) {
+          botResponseButtonsDisplay2(
+            data.fulfillmentMessages[1].listSelect.items[i].title
+          );
+        }
+      }else{
+        console.log("unexpected")
       }
+      
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -90,7 +104,7 @@ document.getElementById("send-button").addEventListener("click", () => {
   callAPI(document.getElementById("chatbot-input").value);
 });
 
-const botResponseDisplay = (data) => {
+const botResponseDisplay = (content) => {
   const msgHTML = `
     <div class="msg ${"left"}-msg">
       <div class="msg-img" style="background-image: url(${BOT_IMG})"></div>
@@ -102,26 +116,9 @@ const botResponseDisplay = (data) => {
         </div>
 
         <div class="msg-text">
-          ${data.fulfillmentText}
+          ${content}
         </div>
       </div>
-    </div>
-  `;
-
-  msgerChat.insertAdjacentHTML("beforeend", msgHTML);
-  msgerChat.scrollTop += 500;
-};
-
-const functest = () => {
-  console.log("btn clicked");
-};
-
-const botResponseButtonsDisplay = (content) => {
-  const msgHTML = `
-    <div class="msg ${"left"}-msg">
-      <button type="button" onclick="callAPI('${content}')">
-        ${content}
-      </button>
     </div>
   `;
 
@@ -141,6 +138,7 @@ const botResponseButtonsDisplay2 = (content) => {
     tag.target = "_blank";
   } else {
     tag = document.createElement("BUTTON");
+    tag.classList.add("Response-Buttons");
     tag.onclick = () => {
       callAPI(`${content}`);
     };
