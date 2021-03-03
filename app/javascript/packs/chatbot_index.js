@@ -5,7 +5,7 @@ const msgerChat = get(".msger-chat");
 const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
 const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
 const BOT_NAME = "BOT";
-const PERSON_NAME = "cr7";
+const PERSON_NAME = "YOU";
 
 //------------------
 
@@ -58,6 +58,7 @@ const callAPI = (query) => {
   const data = {
     query: query,
     authenticity_token: document.getElementsByName("csrf-token")[0].content,
+    url: window.location.href,
   };
 
   fetch("/api/v1", {
