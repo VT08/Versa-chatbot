@@ -24,6 +24,7 @@ class ChatbotMessagesController < ApplicationController
                                                     query_input: query_input
             query_result = response.query_result
             render json: query_result
+            puts(json: query_result)
         end
     end
 end

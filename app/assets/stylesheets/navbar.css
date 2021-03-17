@@ -4,15 +4,15 @@
   margin: 20px 0;
   padding: 10px;
 }
-a {
+.nav-link {
   color: #fff;
   font-weight: 800;
   margin: 15px;
   text-decoration: none;
 }
-a:visited {
+.nav-link:visited {
   color: #fff;
 }
-a:hover {
+.nav-link:hover {
   background-color: initial;
 }
