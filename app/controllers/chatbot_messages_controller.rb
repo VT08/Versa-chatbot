@@ -28,8 +28,8 @@ class ChatbotMessagesController < ApplicationController
             response = session_client.detect_intent session:     dialogflow_session,
                                                     query_input: query_input
             query_result = response.query_result
-            render json: query_result
             translate_result(response)
+            render json: query_result
         end
     end
 
