@@ -22,7 +22,7 @@
     <p id=”notice”><%= notice %></p>
     <%= render "layouts/navbar"%>
     <%= yield %>
-    <% if current_user && current_user.show_chatbot%>
+    <% if (current_user && current_user.show_chatbot)%>
     <%= render "layouts/chatbot"%>
     <% end%>
   </body>
