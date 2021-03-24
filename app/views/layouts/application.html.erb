@@ -13,8 +13,14 @@
 
   <body>
     <% if current_user %>
+    <p>
     Logged in as <%= current_user.email %>.
     <%= link_to "Log Out", logout_path %>
+    </p>
+    <p>
+    Edit your chatbot preference<%= %>
+    <%= link_to "Edit User", edit_user_path(current_user) %>
+    </p>
     <% else %>
     <%= link_to "Sign Up", signup_path %> or 
     <%= link_to "Log In", login_path %>
