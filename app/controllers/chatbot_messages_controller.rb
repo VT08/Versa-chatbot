@@ -1,7 +1,18 @@
 class ChatbotMessagesController < ApplicationController
     def index
-        
+        if(session[:user_id])
+            gon.chat_history = User.find_by_id(session[:user_id]).chatbot_history 
+        end
     end
+
+    def desChatHistory
+        if(session[:user_id])
+            user_data = User.find_by_id(session[:user_id])
+            user_data.update({"chatbot_history"=>[]})
+        end
+        redirect_to root_path
+    end
+
     def chatbot_history
         if(session[:user_id])
             render json: User.find_by_id(session[:user_id]).chatbot_history
@@ -36,11 +47,15 @@ class ChatbotMessagesController < ApplicationController
     private
 
     def translate_result(res)
+        time = Time.new
         query_result = res.query_result
         resJson = {}
         resJson = {
             input: res.query_result.query_text,
-            response: [res.query_result.fulfillment_text]
+            fulfillment_text: [res.query_result.fulfillment_text],
+            response: [],
+            date: time.strftime("%Y-%m-%d"),
+            time: time.strftime("%H:%M")
         }
         if (query_result.fulfillment_messages[1])
             message_array = query_result.fulfillment_messages[1]
@@ -50,9 +65,9 @@ class ChatbotMessagesController < ApplicationController
                 end
                 resJson[:type] = "suggestions"
             elsif(message_array.respond_to?(:list_select))
-                resJson[:response].push(message_array.list_select.title)
+                resJson[:fulfillment_text].push(message_array.list_select.title)
                 message_array.list_select.items.each do |item|
-                    resJson[:response].push(item.info.key)
+                    # resJson[:response].push(item.info.key)
                     resJson[:response].push(item.title)
                 end
                 resJson[:type] = "listSelect"

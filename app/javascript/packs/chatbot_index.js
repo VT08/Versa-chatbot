@@ -23,6 +23,74 @@ function closeForm() {
 }
 
 //-------------------
+const botResponseDisplay = (content, time) => {
+  const msgHTML = `
+    <div class="msg ${"left"}-msg">
+      <div class="msg-img" style="background-image: url(${BOT_IMG})"></div>
+
+      <div class="msg-bubble">
+        <div class="msg-info">
+          <div class="msg-info-name">${BOT_NAME}</div>
+          <div class="msg-info-time">${time}</div>
+        </div>
+
+        <div class="msg-text">
+          ${content}
+        </div>
+      </div>
+    </div>
+  `;
+
+  msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+  msgerChat.scrollTop += 500;
+};
+
+const botResponseButtonsDisplay2 = (content) => {
+  msgHTML = document.createElement("DIV");
+  msgHTML.classList.add("msg");
+  msgHTML.classList.add("left-msg");
+  if (content.startsWith("http")) {
+    tag = document.createElement("A");
+    tag.href = content;
+    tag.target = "_blank";
+  } else {
+    tag = document.createElement("BUTTON");
+    tag.classList.add("Response-Buttons");
+    tag.onclick = () => {
+      appendMessage(PERSON_NAME, PERSON_IMG, "right", `${content}`, formatDate(new Date()));
+      callAPI(`${content}`);
+    };
+  }
+  tag.innerText = content;
+  msgHTML.appendChild(tag);
+  msgerChat.appendChild(msgHTML);
+  msgerChat.scrollTop += 500;
+};
+
+const displayURL = (url)=>{
+  window.open(url, "_block")
+}
+//-------------------
+
+const chat_history = gon.chat_history;
+
+const render_history = (data)=>{
+  appendMessage(PERSON_NAME, PERSON_IMG, "right", data.input, data.time)
+  var i
+  for(i=0;i<data.fulfillment_text.length;i++){
+    botResponseDisplay(data.fulfillment_text[i], data.time)
+  }
+  if(data.type=="suggestions" || data.type=="listSelect"){
+    for(i=0;i<data.response.length;i++){
+      botResponseButtonsDisplay2(data.response[i], data.time)
+    }
+  }
+}
+if(chat_history!=null){
+chat_history.forEach(render_history)
+}
+
+//-------------------
 
 msgerForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -30,11 +98,11 @@ msgerForm.addEventListener("submit", (event) => {
   const msgText = msgerInput.value;
   if (!msgText) return;
 
-  appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+  appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText, formatDate(new Date()));
   msgerInput.value = "";
 });
 
-function appendMessage(name, img, side, text) {
+function appendMessage(name, img, side, text, time) {
   const msgHTML = `
     <div class="msg ${side}-msg">
       <div class="msg-img" style="background-image: url(${img})"></div>
@@ -42,7 +110,7 @@ function appendMessage(name, img, side, text) {
       <div class="msg-bubble">
         <div class="msg-info">
           <div class="msg-info-name">${name}</div>
-          <div class="msg-info-time">${formatDate(new Date())}</div>
+          <div class="msg-info-time">${time}</div>
         </div>
 
         <div class="msg-text">${text}</div>
@@ -71,9 +139,10 @@ const callAPI = (query) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-     
-      if(data.fulfillmentMessages[1].suggestions){
-        botResponseDisplay(data.fulfillmentText);
+      if(data.fulfillmentText.startsWith('http')){
+        displayURL(data.fulfillmentText)
+      }else if(data.fulfillmentMessages[1].suggestions){
+        botResponseDisplay(data.fulfillmentText, formatDate(new Date()));
         const len = data.fulfillmentMessages[1].suggestions.suggestions.length;
         var i;
         for (i = 0; i < len; i++) {
@@ -82,8 +151,8 @@ const callAPI = (query) => {
           );
         }
       }else if(data.fulfillmentMessages[1].listSelect){
-        botResponseDisplay(data.fulfillmentText)
-        botResponseDisplay(data.fulfillmentMessages[1].listSelect.title);
+        botResponseDisplay(data.fulfillmentText, formatDate(new Date()))
+        botResponseDisplay(data.fulfillmentMessages[1].listSelect.title, formatDate(new Date()));
         const len = data.fulfillmentMessages[1].listSelect.items.length;
         var i;
         for (i = 0; i < len; i++) {
@@ -105,50 +174,8 @@ document.getElementById("send-button").addEventListener("click", () => {
   callAPI(document.getElementById("chatbot-input").value);
 });
 
-const botResponseDisplay = (content) => {
-  const msgHTML = `
-    <div class="msg ${"left"}-msg">
-      <div class="msg-img" style="background-image: url(${BOT_IMG})"></div>
-
-      <div class="msg-bubble">
-        <div class="msg-info">
-          <div class="msg-info-name">${BOT_NAME}</div>
-          <div class="msg-info-time">${formatDate(new Date())}</div>
-        </div>
-
-        <div class="msg-text">
-          ${content}
-        </div>
-      </div>
-    </div>
-  `;
-
-  msgerChat.insertAdjacentHTML("beforeend", msgHTML);
-  msgerChat.scrollTop += 500;
-};
-
 // Above code doesnt work cause rails treats js files attached as different from functions present in the script tag
 
-const botResponseButtonsDisplay2 = (content) => {
-  msgHTML = document.createElement("DIV");
-  msgHTML.classList.add("msg");
-  msgHTML.classList.add("left-msg");
-  if (content.startsWith("http")) {
-    tag = document.createElement("A");
-    tag.href = content;
-    tag.target = "_blank";
-  } else {
-    tag = document.createElement("BUTTON");
-    tag.classList.add("Response-Buttons");
-    tag.onclick = () => {
-      callAPI(`${content}`);
-    };
-  }
-  tag.innerText = content;
-  msgHTML.appendChild(tag);
-  msgerChat.appendChild(msgHTML);
-  msgerChat.scrollTop += 500;
-};
 
 // const responseDisplay = (data) => {
 //   console.log(data)

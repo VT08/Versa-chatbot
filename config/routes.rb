@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "reports" , to: "reports#index"
   post "/api/v1" , to: "chatbot_messages#dialogflow_api"
   get "/api/v1/chat_history" , to: "chatbot_messages#chatbot_history"
+  post "deleteChatHistory", to: "chatbot_messages#desChatHistory"
   root "chatbot_messages#index"
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

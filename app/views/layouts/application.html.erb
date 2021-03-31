@@ -21,6 +21,10 @@
     Edit your chatbot preference<%= %>
     <%= link_to "Edit User", edit_user_path(current_user) %>
     </p>
+    <p>
+    Delete Chat History
+    <%= link_to "Delete Chat" , deleteChatHistory_path, :method => :post %>
+    </p>
     <% else %>
     <%= link_to "Sign Up", signup_path %> or 
     <%= link_to "Log In", login_path %>

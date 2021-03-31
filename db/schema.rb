@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_03_22_154942) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "show_chatbot", default: false
-    t.json "chatbot_history", default: [], array: true
+    t.json "chatbot_history"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
