@@ -64,6 +64,10 @@ class ChatbotMessagesController < ApplicationController
                     resJson[:response].push(item.title)
                 end
                 resJson[:type] = "suggestions"
+            elsif(message_array.respond_to?(:linkOutSuggestion))
+                resJson[:fulfillment_text].push(message_array.linkOutSuggestion.uri)
+                resJson[:response].push(message_array.linkOutSuggestion.destinationName)
+                resJson[:type] = "linkOutSuggestion"
             elsif(message_array.respond_to?(:list_select))
                 resJson[:fulfillment_text].push(message_array.list_select.title)
                 message_array.list_select.items.each do |item|
