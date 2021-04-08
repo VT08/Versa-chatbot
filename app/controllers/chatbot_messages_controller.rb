@@ -69,17 +69,23 @@ class ChatbotMessagesController < ApplicationController
                 resJson[:response].push(message_array.linkOutSuggestion.destinationName)
                 resJson[:type] = "linkOutSuggestion"
             elsif(message_array.respond_to?(:list_select))
-                resJson[:fulfillment_text].push(message_array.list_select.title)
-                message_array.list_select.items.each do |item|
-                    # resJson[:response].push(item.info.key)
-                    resJson[:response].push(item.title)
+                if (message_array.list_select == nil)
+                    resJson[:fulfillment_text].push("Sorry, I couldn't understand that, you can try out")
+                    resJson[:response].push("https://support.versaclouderp.com/hc/en-us")
+                    resJson[:type] = "unknown"
+                else
+                    resJson[:fulfillment_text].push(message_array.list_select.title)
+                    message_array.list_select.items.each do |item|
+                        # resJson[:response].push(item.info.key)
+                        resJson[:response].push(item.title)
+                    end
+                    resJson[:type] = "listSelect"
                 end
-                resJson[:type] = "listSelect"
             end
         else
         resJson[:type] = "text"
         end
-        puts (resJson)
+        # puts (resJson)
         if(session[:user_id])
             user_data = User.find_by_id(session[:user_id])
             user_data.update({"chatbot_history"=>[*user_data.chatbot_history, resJson]})

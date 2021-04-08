@@ -57,7 +57,13 @@ const botResponseButtonsDisplay2 = (content) => {
     tag = document.createElement("BUTTON");
     tag.classList.add("Response-Buttons");
     tag.onclick = () => {
-      appendMessage(PERSON_NAME, PERSON_IMG, "right", `${content}`, formatDate(new Date()));
+      appendMessage(
+        PERSON_NAME,
+        PERSON_IMG,
+        "right",
+        `${content}`,
+        formatDate(new Date())
+      );
       callAPI(`${content}`);
     };
   }
@@ -67,27 +73,27 @@ const botResponseButtonsDisplay2 = (content) => {
   msgerChat.scrollTop += 500;
 };
 
-const displayURL = (url)=>{
-  window.open(url, "_block")
-}
+const displayURL = (url) => {
+  window.open(url, "_block");
+};
 //-------------------
 
 const chat_history = gon.chat_history;
 
-const render_history = (data)=>{
-  appendMessage(PERSON_NAME, PERSON_IMG, "right", data.input, data.time)
-  var i
-  for(i=0;i<data.fulfillment_text.length;i++){
-    botResponseDisplay(data.fulfillment_text[i], data.time)
+const render_history = (data) => {
+  appendMessage(PERSON_NAME, PERSON_IMG, "right", data.input, data.time);
+  var i;
+  for (i = 0; i < data.fulfillment_text.length; i++) {
+    botResponseDisplay(data.fulfillment_text[i], data.time);
   }
-  if(data.type=="suggestions" || data.type=="listSelect"){
-    for(i=0;i<data.response.length;i++){
-      botResponseButtonsDisplay2(data.response[i], data.time)
+  if (data.type == "suggestions" || data.type == "listSelect") {
+    for (i = 0; i < data.response.length; i++) {
+      botResponseButtonsDisplay2(data.response[i], data.time);
     }
   }
-}
-if(chat_history!=null){
-chat_history.forEach(render_history)
+};
+if (chat_history != null) {
+  chat_history.forEach(render_history);
 }
 
 //-------------------
@@ -98,7 +104,13 @@ msgerForm.addEventListener("submit", (event) => {
   const msgText = msgerInput.value;
   if (!msgText) return;
 
-  appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText, formatDate(new Date()));
+  appendMessage(
+    PERSON_NAME,
+    PERSON_IMG,
+    "right",
+    msgText,
+    formatDate(new Date())
+  );
   msgerInput.value = "";
 });
 
@@ -139,9 +151,9 @@ const callAPI = (query) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if(data.fulfillmentText.startsWith('http')){
-        displayURL(data.fulfillmentText)
-      }else if(data.fulfillmentMessages[1].suggestions){
+      if (data.fulfillmentText.startsWith("http")) {
+        displayURL(data.fulfillmentText);
+      } else if (data.fulfillmentMessages[1].suggestions) {
         botResponseDisplay(data.fulfillmentText, formatDate(new Date()));
         const len = data.fulfillmentMessages[1].suggestions.suggestions.length;
         var i;
@@ -150,9 +162,12 @@ const callAPI = (query) => {
             data.fulfillmentMessages[1].suggestions.suggestions[i].title
           );
         }
-      }else if(data.fulfillmentMessages[1].listSelect){
-        botResponseDisplay(data.fulfillmentText, formatDate(new Date()))
-        botResponseDisplay(data.fulfillmentMessages[1].listSelect.title, formatDate(new Date()));
+      } else if (data.fulfillmentMessages[1].listSelect) {
+        botResponseDisplay(data.fulfillmentText, formatDate(new Date()));
+        botResponseDisplay(
+          data.fulfillmentMessages[1].listSelect.title,
+          formatDate(new Date())
+        );
         const len = data.fulfillmentMessages[1].listSelect.items.length;
         var i;
         for (i = 0; i < len; i++) {
@@ -160,10 +175,9 @@ const callAPI = (query) => {
             data.fulfillmentMessages[1].listSelect.items[i].title
           );
         }
-      }else{
-        console.log("unexpected")
+      } else {
+        console.log("unexpected");
       }
-      
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -175,7 +189,6 @@ document.getElementById("send-button").addEventListener("click", () => {
 });
 
 // Above code doesnt work cause rails treats js files attached as different from functions present in the script tag
-
 
 // const responseDisplay = (data) => {
 //   console.log(data)
