@@ -46,9 +46,10 @@ const botResponseDisplay = (content, time) => {
 };
 
 const botResponseButtonsDisplay2 = (content) => {
-  msgHTML = document.createElement("DIV");
+  const msgHTML = document.createElement("DIV");
   msgHTML.classList.add("msg");
   msgHTML.classList.add("left-msg");
+  var tag;
   if (content.startsWith("http")) {
     tag = document.createElement("A");
     tag.href = content;
@@ -129,7 +130,6 @@ function appendMessage(name, img, side, text, time) {
       </div>
     </div>
   `;
-
   msgerChat.insertAdjacentHTML("beforeend", msgHTML);
   msgerChat.scrollTop += 500;
 }
@@ -247,3 +247,10 @@ function formatDate(date) {
 function random(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
+
+const renderFunc = {
+  callAPI: callAPI,
+  appendMessage: appendMessage,
+  formatDate: formatDate,
+};
+export default renderFunc;

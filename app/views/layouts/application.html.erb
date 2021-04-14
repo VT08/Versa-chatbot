@@ -8,7 +8,7 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <%= javascript_pack_tag 'turbolink' %>
+    
   </head>
 
   <body>
@@ -35,5 +35,9 @@
     <% if (current_user && current_user.show_chatbot)%>
     <%= render "layouts/chatbot"%>
     <% end%>
+    <script>
+    console.log("application render")
+    </script>
+    
   </body>
 </html>
