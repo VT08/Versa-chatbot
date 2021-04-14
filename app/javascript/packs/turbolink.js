@@ -40,3 +40,12 @@ const chatReq = (req) => {
   );
   renderFunc.callAPI(req);
 };
+
+function PopUp(hideOrshow) {
+  if (hideOrshow == 'hide') document.getElementById('wrapper').style.display = "none";
+  else document.getElementById('wrapper').removeAttribute('style');
+}
+
+setTimeout(function () {
+  PopUp('show');
+}, 2000);
