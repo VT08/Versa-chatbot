@@ -1,16 +1,27 @@
 .prompt-container {
   display: block;
   position: fixed;
-  bottom: 115px;
+  bottom: 100px;
   right: 28px;
-  border-radius: 5px;
-  border-width: 0px;
   height: fit-content;
-  width: 300px;
-  border: 2px solid #ddd;
-  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column-reverse;
   padding: 5px;
-  background-color: #bdbdbd;
+  background-color: #bdbdbd00;
+  border-width: 2px;
+}
+.btn-container{
+  display: flex;
+  flex-direction: row-reverse;
+}
+.prompt-button{
+  color: rgb(0, 89, 255);
+  background-color: rgb(229, 233, 247);
+  border-color: rgb(0, 89, 255);
+  border-width: 2px;
+  border-radius: 15px;
+  padding: 4px 10px;
+  margin: 2px;
 }
 .openChatBtn {
   display: block;
