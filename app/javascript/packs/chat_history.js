@@ -1,0 +1,1 @@
+console.log(gon.chat_history)

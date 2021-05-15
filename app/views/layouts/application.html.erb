@@ -7,9 +7,37 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    
   </head>
 
   <body>
+    <% if current_user %>
+    <p>
+    Logged in as <%= current_user.email %>.
+    <%= link_to "Log Out", logout_path %>
+    </p>
+    <p>
+    Edit your chatbot preference<%= %>
+    <%= link_to "Edit User", edit_user_path(current_user) %>
+    </p>
+    <p>
+    Delete Chat History
+    <%= link_to "Delete Chat" , deleteChatHistory_path, :method => :post %>
+    </p>
+    <% else %>
+    <%= link_to "Sign Up", signup_path %> or 
+    <%= link_to "Log In", login_path %>
+    <% end %>
+    <p id=”notice”><%= notice %></p>
+    <%= render "layouts/navbar"%>
     <%= yield %>
+    <% if (current_user && current_user.show_chatbot)%>
+    <%= render "layouts/chatbot"%>
+    <% end%>
+    <script>
+    console.log("application render")
+    </script>
+    
   </body>
 </html>

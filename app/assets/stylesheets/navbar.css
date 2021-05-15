@@ -1,0 +1,18 @@
+.nav-container {
+  background-color: #015a9e;
+  width: 100%;
+  margin: 20px 0;
+  padding: 10px;
+}
+.nav-link {
+  color: #fff;
+  font-weight: 800;
+  margin: 15px;
+  text-decoration: none;
+}
+.nav-link:visited {
+  color: #fff;
+}
+.nav-link:hover {
+  background-color: initial;
+}
