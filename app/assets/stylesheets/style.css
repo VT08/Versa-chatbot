@@ -1,7 +1,7 @@
 .prompt-container {
   display: block;
   position: fixed;
-  bottom: 100px;
+  bottom: 80px;
   right: 28px;
   height: fit-content;
   display: flex;
@@ -10,11 +10,11 @@
   background-color: #bdbdbd00;
   border-width: 2px;
 }
-.btn-container{
+.btn-container {
   display: flex;
   flex-direction: row-reverse;
 }
-.prompt-button{
+.prompt-button {
   color: rgb(0, 89, 255);
   background-color: rgb(229, 233, 247);
   border-color: rgb(0, 89, 255);
@@ -28,8 +28,8 @@
   position: fixed;
   bottom: 23px;
   right: 28px;
-  height: 70px;
-  width: 70px;
+  height: 50px;
+  width: 50px;
   border-radius: 50px;
   border-width: 0px;
   background-image: url("https://image.flaticon.com/icons/svg/327/327779.svg");

@@ -190,49 +190,6 @@ document.getElementById("send-button").addEventListener("click", () => {
 
 // Above code doesnt work cause rails treats js files attached as different from functions present in the script tag
 
-// const responseDisplay = (data) => {
-//   console.log(data)
-//   if (data.fulfillmentMessages[1]) {
-//     if (data.fulfillmentMessages[1].suggestions) {
-//       data.fulfillmentMessages[1].suggestions.suggestions.forEach((element) => {
-//         console.log(element.title);
-//         display("DIV", element.title, true);
-//       });
-//     } else if (data.fulfillmentMessages[1].listSelect) {
-//       data.fulfillmentMessages[1].listSelect.items.forEach((element) => {
-//         console.log(element.title);
-//         display("DIV", element.title, true);
-//         console.log(element.info.key);
-//       });
-//     } else {
-//       console.log("unexpected");
-//     }
-//   } else {
-//     console.log(data.fulfillmentText);
-//   }
-// };
-
-// const display = (tagType, content, clickable) => {
-//   if (content.startsWith("http")) {
-//     tag = document.createElement("A");
-//     tag.href = content;
-//     tag.target = "_blank";
-//   } else {
-//     tag = document.createElement(tagType);
-//     if (clickable) {
-//       tag.onclick = () => {
-//         callAPI(`${content}`);
-//       };
-//       tag.classList.add("clickable-response");
-//     } else {
-//       tag.classList.add("response");
-//     }
-//   }
-//   tag.innerText = content;
-//   document.getElementsByClassName("response-list")[0].appendChild(tag);
-//   document.getElementsByClassName("response-list")[0].appendChild(document.createElement("BR"));
-// };
-
 function get(selector, root = document) {
   return root.querySelector(selector);
 }
