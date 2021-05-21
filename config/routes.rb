@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # get "logout", to: "sessions#destroy", as: "logout"
   # get "dashboard", to: "dashboard#index"
   # get "reports" , to: "reports#index"
-  # post "/api/v1" , to: "chatbot_messages#dialogflow_api"
+  post "/api/v1" , to: "chatbot#dialogflow_api"
   # get "/api/v1/chat_history" , to: "chatbot_messages#chatbot_history"
   # post "deleteChatHistory", to: "chatbot_messages#desChatHistory"
   root "chatbot#index"
