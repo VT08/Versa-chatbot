@@ -79,23 +79,23 @@ const displayURL = (url) => {
 };
 //-------------------
 
-const chat_history = gon.chat_history;
+// const chat_history = gon.chat_history;
 
-const render_history = (data) => {
-  appendMessage(PERSON_NAME, PERSON_IMG, "right", data.input, data.time);
-  var i;
-  for (i = 0; i < data.fulfillment_text.length; i++) {
-    botResponseDisplay(data.fulfillment_text[i], data.time);
-  }
-  if (data.type == "suggestions" || data.type == "listSelect") {
-    for (i = 0; i < data.response.length; i++) {
-      botResponseButtonsDisplay2(data.response[i], data.time);
-    }
-  }
-};
-if (chat_history != null) {
-  chat_history.forEach(render_history);
-}
+// const render_history = (data) => {
+//   appendMessage(PERSON_NAME, PERSON_IMG, "right", data.input, data.time);
+//   var i;
+//   for (i = 0; i < data.fulfillment_text.length; i++) {
+//     botResponseDisplay(data.fulfillment_text[i], data.time);
+//   }
+//   if (data.type == "suggestions" || data.type == "listSelect") {
+//     for (i = 0; i < data.response.length; i++) {
+//       botResponseButtonsDisplay2(data.response[i], data.time);
+//     }
+//   }
+// };
+// if (chat_history != null) {
+//   chat_history.forEach(render_history);
+// }
 
 //-------------------
 

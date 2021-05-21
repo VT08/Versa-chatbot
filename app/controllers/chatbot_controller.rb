@@ -1,26 +1,7 @@
-class ChatbotMessagesController < ApplicationController
+class ChatbotController < ApplicationController
     def index
-        if(session[:user_id])
-            gon.chat_history = User.find_by_id(session[:user_id]).chatbot_history 
-        end
+    
     end
-
-    def desChatHistory
-        if(session[:user_id])
-            user_data = User.find_by_id(session[:user_id])
-            user_data.update({"chatbot_history"=>[]})
-        end
-        redirect_to root_path
-    end
-
-    def chatbot_history
-        if(session[:user_id])
-            render json: User.find_by_id(session[:user_id]).chatbot_history
-        else
-            render json: {"error":"please log in to get response"}
-        end
-    end
-
     def dialogflow_api
         project_id = "project-krystl"
         session_id = "mysession"
@@ -84,11 +65,6 @@ class ChatbotMessagesController < ApplicationController
             end
         else
         resJson[:type] = "text"
-        end
-        # puts (resJson)
-        if(session[:user_id])
-            user_data = User.find_by_id(session[:user_id])
-            user_data.update({"chatbot_history"=>[*user_data.chatbot_history, resJson]})
-        end      
+        end   
     end
 end
