@@ -8,55 +8,46 @@ const buttonsDisplay = (content) => {
   tag = document.createElement("BUTTON");
   tag.classList.add("prompt-button");
   tag.onclick = () => {
-    chatReq(content);
+    renderFunc.openForm();
+    renderFunc.appendMessage(
+      "YOU",
+      renderFunc.PERSON_IMG,
+      "right",
+      content,
+      renderFunc.formatDate(new Date())
+    );
+    renderFunc.callAPI(content);
   };
   tag.innerText = content;
   popUpHTML.appendChild(tag);
   popUpDiv.appendChild(popUpHTML);
 };
 
+const promptsLoader = (promptsArray) => {
+  document.getElementById("wrapper").removeAttribute("style");
+  promptsArray.forEach((v, i) => {
+    setTimeout(() => {
+      buttonsDisplay(v);
+    }, 650 * (i + 1));
+  });
+};
+
 console.log("loaded once");
 {
   console.log(window.location.pathname);
   if (window.location.pathname == "/dashboard") {
-    setTimeout(function () {
-      document.getElementById("wrapper").removeAttribute("style");
-    }, 500);
-
-    setTimeout(function () {
-      buttonsDisplay("Know more about Dashboard?");
-    }, 1000);
-    setTimeout(function () {
-      buttonsDisplay("Revenue Growth");
-    }, 2000);
-    setTimeout(function () {
-      buttonsDisplay("Bills Due");
-    }, 3000);
+    promptsLoader([
+      "Know more about Dashboard?",
+      "Revenue Growth",
+      "Bills Due",
+    ]);
   } else if (window.location.pathname == "/reports") {
-    setTimeout(function () {
-      document.getElementById("wrapper").removeAttribute("style");
-    }, 500);
-    setTimeout(function () {
-      buttonsDisplay("know more about reports?");
-    }, 1000);
-    setTimeout(function () {
-      buttonsDisplay("All Reports");
-    }, 2000);
-    setTimeout(function () {
-      buttonsDisplay("Financial Reports");
-    }, 3000);
+    promptsLoader([
+      "Know more about reports?",
+      "All Reports",
+      "Financial Reports",
+    ]);
   } else {
-    setTimeout(function () {
-      document.getElementById("wrapper").removeAttribute("style");
-    }, 500);
-    setTimeout(function () {
-      buttonsDisplay("Customers");
-    }, 1000);
-    setTimeout(function () {
-      buttonsDisplay("Products");
-    }, 2000);
-    setTimeout(function () {
-      buttonsDisplay("Invoice");
-    }, 3000);
+    promptsLoader(["Customers", "Products", "Invoice"]);
   }
 }
