@@ -112,6 +112,7 @@ msgerForm.addEventListener("submit", (event) => {
     msgText,
     formatDate(new Date())
   );
+  callAPI(msgerInput.value);
   msgerInput.value = "";
 });
 
@@ -184,9 +185,9 @@ const callAPI = (query) => {
     });
 };
 
-document.getElementById("send-button").addEventListener("click", () => {
-  callAPI(document.getElementById("chatbot-input").value);
-});
+// document.getElementById("send-button").addEventListener("click", () => {
+//   callAPI(document.getElementById("chatbot-input").value);
+// });
 
 // Above code doesnt work cause rails treats js files attached as different from functions present in the script tag
 
@@ -207,7 +208,9 @@ function random(min, max) {
 
 const renderFunc = {
   callAPI: callAPI,
+  openForm: openForm,
   appendMessage: appendMessage,
+  PERSON_IMG: PERSON_IMG,
   formatDate: formatDate,
 };
 export default renderFunc;
