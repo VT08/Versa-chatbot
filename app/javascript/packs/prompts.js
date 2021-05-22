@@ -1,4 +1,4 @@
-import renderFunc from "./chatbot_index";
+import renderFunc from "./chatbot";
 const popUpDiv = document.getElementById("wrapper");
 
 const buttonsDisplay = (content) => {

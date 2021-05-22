@@ -20,7 +20,7 @@ class ChatbotController < ApplicationController
             response = session_client.detect_intent session:     dialogflow_session,
                                                     query_input: query_input
             query_result = response.query_result
-            translate_result(response)
+            puts(translate_result(response))
             render json: query_result
         end
     end
@@ -66,5 +66,6 @@ class ChatbotController < ApplicationController
         else
         resJson[:type] = "text"
         end   
+        return resJson
     end
 end

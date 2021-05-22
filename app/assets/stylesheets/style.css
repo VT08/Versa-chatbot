@@ -144,8 +144,12 @@ html {
   align-items: center;
   margin-bottom: 10px;
 }
+.msg-text {
+  font-size: 0.8em;
+}
 .msg-info-name {
   margin-right: 10px;
+  font-size: 0.85em;
   font-weight: bold;
 }
 .msg-info-time {
