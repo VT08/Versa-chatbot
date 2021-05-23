@@ -45,18 +45,16 @@ const botResponseDisplay = (content, time) => {
   msgerChat.scrollTop += 500;
 };
 
-const botResponseButtonsDisplay2 = (content) => {
+const botResponseButtonsDisplay = (content, isUrlInstantaneous) => {
   const msgHTML = document.createElement("DIV");
   msgHTML.classList.add("msg");
   msgHTML.classList.add("left-msg");
   var tag;
+  tag = document.createElement("BUTTON");
+  tag.classList.add("Response-Buttons");
   if (content.startsWith("http")) {
-    tag = document.createElement("A");
-    tag.href = content;
-    tag.target = "_blank";
+    tag.onclick = displayURL(content, isUrlInstantaneous);
   } else {
-    tag = document.createElement("BUTTON");
-    tag.classList.add("Response-Buttons");
     tag.onclick = () => {
       appendMessage(
         PERSON_NAME,
@@ -74,30 +72,14 @@ const botResponseButtonsDisplay2 = (content) => {
   msgerChat.scrollTop += 500;
 };
 
-const displayURL = (url) => {
-  window.open(url, "_block");
+const displayURL = (url, isUrlInstantaneous) => {
+  if (isUrlInstantaneous) {
+    window.open(url, "_blank");
+  }
+  return () => {
+    window.open(url, "_blank");
+  };
 };
-//-------------------
-
-// const chat_history = gon.chat_history;
-
-// const render_history = (data) => {
-//   appendMessage(PERSON_NAME, PERSON_IMG, "right", data.input, data.time);
-//   var i;
-//   for (i = 0; i < data.fulfillment_text.length; i++) {
-//     botResponseDisplay(data.fulfillment_text[i], data.time);
-//   }
-//   if (data.type == "suggestions" || data.type == "listSelect") {
-//     for (i = 0; i < data.response.length; i++) {
-//       botResponseButtonsDisplay2(data.response[i], data.time);
-//     }
-//   }
-// };
-// if (chat_history != null) {
-//   chat_history.forEach(render_history);
-// }
-
-//-------------------
 
 msgerForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -151,45 +133,24 @@ const callAPI = (query) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      if (data.fulfillmentText.startsWith("http")) {
-        displayURL(data.fulfillmentText);
-      } else if (data.fulfillmentMessages[1].suggestions) {
-        botResponseDisplay(data.fulfillmentText, formatDate(new Date()));
-        const len = data.fulfillmentMessages[1].suggestions.suggestions.length;
-        var i;
-        for (i = 0; i < len; i++) {
-          botResponseButtonsDisplay2(
-            data.fulfillmentMessages[1].suggestions.suggestions[i].title
-          );
+      console.log("check", data.type, data);
+      data.fulfillment_text.forEach((v) => {
+        if (v != "") {
+          if (v.startsWith("http")) {
+            botResponseButtonsDisplay(v, true);
+          } else {
+            botResponseDisplay(v, formatDate(new Date()));
+          }
         }
-      } else if (data.fulfillmentMessages[1].listSelect) {
-        botResponseDisplay(data.fulfillmentText, formatDate(new Date()));
-        botResponseDisplay(
-          data.fulfillmentMessages[1].listSelect.title,
-          formatDate(new Date())
-        );
-        const len = data.fulfillmentMessages[1].listSelect.items.length;
-        var i;
-        for (i = 0; i < len; i++) {
-          botResponseButtonsDisplay2(
-            data.fulfillmentMessages[1].listSelect.items[i].title
-          );
-        }
-      } else {
-        console.log("unexpected");
-      }
+      });
+      data.response.forEach((v) => {
+        botResponseButtonsDisplay(v, false);
+      });
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 };
-
-// document.getElementById("send-button").addEventListener("click", () => {
-//   callAPI(document.getElementById("chatbot-input").value);
-// });
-
-// Above code doesnt work cause rails treats js files attached as different from functions present in the script tag
 
 function get(selector, root = document) {
   return root.querySelector(selector);
