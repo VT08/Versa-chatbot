@@ -167,11 +167,11 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-const renderFunc = {
-  callAPI: callAPI,
-  openForm: openForm,
-  appendMessage: appendMessage,
-  PERSON_IMG: PERSON_IMG,
-  formatDate: formatDate,
-};
-export default renderFunc;
+// const renderFunc = {
+//   callAPI: callAPI,
+//   openForm: openForm,
+//   appendMessage: appendMessage,
+//   PERSON_IMG: PERSON_IMG,
+//   formatDate: formatDate,
+// };
+// export default renderFunc;
