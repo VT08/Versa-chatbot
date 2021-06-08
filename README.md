@@ -1,24 +1,14 @@
-# README
+# Versa Chatbot
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Installation process-
 
-Things you may want to cover:
+The latest branch is copyJS (created for integration into Versa), so after cloning the git repository, you should switch to it, and decide, if you want to merge it into the master branch.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Intall Ruby on Rails first, using the link attached in transmittal document.
+Then run
+```
+git clone https://github.com/VT08/Versa-chatbot.git
+cd Versa-chatbot
+bundle install
+rails s
+```
